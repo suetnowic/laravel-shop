@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(!app()->isProduction());
 
         if (app()->isProduction()) {
-            DB::whenQueryingForLongerThan(500, function (Connection $connection) {
+            DB::whenQueryingForLongerThan(CarbonInterval::seconds(5), function (Connection $connection) {
                 logger()->channel('telegram')->debug('whenQueryingForLongerThan:' . $connection->totalQueryDuration());
             });
 
