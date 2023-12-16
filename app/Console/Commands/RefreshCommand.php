@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class RefreshCommand extends Command
 {
@@ -16,6 +17,7 @@ class RefreshCommand extends Command
         if (app()->isProduction()) {
             return self::FAILURE;
         }
+        Storage::deleteDirectory('images/products');
         $this->call('migrate:fresh', ['--seed' => true]);
         return self::SUCCESS;
     }
